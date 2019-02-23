@@ -3,7 +3,7 @@ from django.db import models
 
 from accounts.models import Member, User
 from model_utils.models import TimeStampedModel
-from restaurants.models import Restaurant, FoodItem
+from restaurants.models import Restaurant, FoodItem, FoodItemAddon
 
 
 class Order(TimeStampedModel):
@@ -45,7 +45,7 @@ class Order(TimeStampedModel):
     comment = models.TextField()
     is_dine_in = models.BooleanField(default=False)
     seats = models.PositiveIntegerField(default=0)
-    items = models.ManyToManyField(FoodItem, related_name="orders")
+    food_items = models.ManyToManyField(FoodItem, through="OrderItem", related_name="orders")
     scheduled_datetime = models.DateTimeField()
     cancellation_charge = models.DecimalField(
         default=0, max_digits=10, decimal_places=2
@@ -63,3 +63,11 @@ class Order(TimeStampedModel):
     )
     user_review = models.TextField(null=True, blank=True, max_length=280)
     restaurant_review = models.TextField(blank=True, max_length=280)
+
+
+class OrderItem(TimeStampedModel):
+    order = models.ForeignKey(Order, on_delete=models.CASCADE, related_name="order_items")
+    food_item = models.ForeignKey(FoodItem, on_delete=models.CASCADE, related_name="order_items")
+    quantity = models.PositiveIntegerField(validators=[MinValueValidator(1)])
+    comment = models.TextField()
+    addons = models.ManyToManyField(FoodItemAddon, related_name="order_items")

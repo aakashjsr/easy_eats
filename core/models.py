@@ -23,7 +23,7 @@ class Location(TimeStampedModel):
     postcode = models.CharField(max_length=10, null=True, blank=True)
 
     def __str__(self):
-        return self.name
+        return "{} - {}".format(self.name, self.city)
 
 
 class FoodCategory(TimeStampedModel):
@@ -35,3 +35,6 @@ class FoodCategory(TimeStampedModel):
 
     def __str__(self):
         return self.name
+
+    class Meta:
+        verbose_name_plural = "Food Categories"

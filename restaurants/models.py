@@ -3,7 +3,7 @@ from django.core.validators import MaxValueValidator, MinValueValidator
 
 from model_utils.models import TimeStampedModel
 from accounts.models import RestaurantStaff, RestaurantOwner
-from core.models import FoodCategory, Tag
+from core.models import FoodCategory, Tag, Location
 
 
 class Restaurant(TimeStampedModel):
@@ -15,6 +15,7 @@ class Restaurant(TimeStampedModel):
     FULL_SERIVCE = "Full Service"
 
     name = models.CharField(max_length=255)
+    location = models.ForeignKey(Location, on_delete=models.CASCADE, related_name="restaurants", null=True, blank=True)
     type = models.SmallIntegerField(
         choices=[(0, SELF_SERVICE), (1, FULL_SERIVCE)],
         default=1,
@@ -88,7 +89,7 @@ class FoodItem(TimeStampedModel):
     category = models.ForeignKey(
         FoodCategory, related_name="food_items", on_delete=models.CASCADE
     )
-    image = models.ImageField()
+    image = models.ImageField(blank=True)
     tags = models.ManyToManyField(Tag, related_name="food_items", db_index=True)
     has_dairy = models.BooleanField(default=False)
     has_nuts = models.BooleanField(default=False)
@@ -99,3 +100,17 @@ class FoodItem(TimeStampedModel):
 
     def __str__(self):
         return "{} - {}".format(self.name, self.restaurant)
+
+
+class FoodItemAddon(TimeStampedModel):
+    """
+    Add ons for food items
+    """
+    name = models.CharField(max_length=255)
+    food_item = models.ForeignKey(FoodItem, on_delete=models.CASCADE, related_name="addons")
+    price = models.PositiveIntegerField()
+    description = models.CharField(max_length=1024)
+    required = models.BooleanField(default=False)
+
+    def __str__(self):
+        return "{} - {}".format(self.food_item.name, self.name)
