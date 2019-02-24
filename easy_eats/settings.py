@@ -124,7 +124,7 @@ STATIC_URL = '/static/'
 
 AWS_S3_OBJECT_PARAMETERS = {'CacheControl': 'max-age=86400'}
 
-AWS_DEFAULT_ACL = None
+AWS_DEFAULT_ACL = "public-read"
 
 AWS_STORAGE_BUCKET_NAME = 'meda-storage'
 AWS_S3_CUSTOM_DOMAIN = '{}.s3.amazonaws.com'.format(AWS_STORAGE_BUCKET_NAME)
