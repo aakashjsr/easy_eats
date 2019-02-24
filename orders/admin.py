@@ -12,6 +12,7 @@ class OrderAdmin(admin.ModelAdmin):
     inlines = [OrderItemInline]
     list_display = ("member", "restaurant", "status", "scheduled_datetime")
     list_filter = ("scheduled_datetime", "restaurant", "member", "status")
+    readonly_fields = ("cancelled_by", )
 
 
 admin.site.register(Order, OrderAdmin)
