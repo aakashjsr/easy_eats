@@ -87,7 +87,22 @@ class RestaurantStaffAdmin(admin.ModelAdmin):
 class DinerAdmin(admin.ModelAdmin):
 
     model = Diner
-    search_fields = ("user__email", "user__first_name")
+    list_display = ("get_first_name", "get_email", "get_mobile", "id")
+
+    def get_email(self, instance):
+        return instance.user.email
+
+    def get_mobile(self, instance):
+        return instance.user.mobile
+
+    def get_first_name(self, instance):
+        return instance.user.first_name
+
+    get_email.short_description = 'Email'
+    get_first_name.short_description = 'First Name'
+    get_mobile.short_description = 'Phone'
+
+    search_fields = ("user__email", "user__first_name", "user__mobile")
 
 
 admin.site.register(User, MyUserAdmin)
