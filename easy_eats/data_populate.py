@@ -56,11 +56,11 @@ class PopulateData:
 
         self.resturant_owner_1 = RestaurantOwner.objects.create(user=self.user_1)
         self.resturant_staff_1 = RestaurantStaff.objects.create(user=self.user_2)
-        self.member_1 = Member.objects.create(user=self.user_3)
+        self.member_1 = Diner.objects.create(user=self.user_3)
 
         self.resturant_owner_2 = RestaurantOwner.objects.create(user=self.user_4)
         self.resturant_staff_2 = RestaurantStaff.objects.create(user=self.user_5)
-        self.member_2 = Member.objects.create(user=self.user_6)
+        self.member_2 = Diner.objects.create(user=self.user_6)
 
     def populate_resturants(self):
         self.resturant_1 = Restaurant.objects.create(

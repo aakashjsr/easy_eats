@@ -8,10 +8,21 @@ class FoodItemAddonInline(admin.TabularInline):
 
 
 class FoodItemAdmin(admin.ModelAdmin):
+    list_display = ("name", "restaurant", "get_category", "get_tags")
     inlines = [FoodItemAddonInline]
     model = FoodItem
-    list_filter = ("restaurant__name",)
+    list_filter = ("restaurant__name", "category", )
     search_fields = ("name", "restaurant__name")
+
+    def get_tags(self, instance):
+        return list(instance.tags.values_list("name", flat=True))
+
+    def get_category(self, instance):
+        return instance.category
+
+    get_category.short_description = "Cuisine"
+    get_category.admin_order_field = "category"
+    get_tags.short_description = "Tags"
 
 
 class FoodItemInline(admin.TabularInline):
@@ -23,7 +34,6 @@ class RestaurantAdmin(admin.ModelAdmin):
     inlines = [FoodItemInline]
     list_display = (
         "name",
-        "owner",
         "dineout_online",
         "takeaway_online",
         "search_position",
@@ -43,4 +53,4 @@ class RestaurantAdmin(admin.ModelAdmin):
 
 admin.site.register(FoodItem, FoodItemAdmin)
 admin.site.register(Restaurant, RestaurantAdmin)
-admin.site.register(FoodItemAddon)
+

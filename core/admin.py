@@ -5,8 +5,13 @@ from core.models import Tag, Location, FoodCategory
 
 admin.site.unregister(Group)
 
+
+class LocationAdmin(admin.ModelAdmin):
+    model = Location
+    list_display = ("area", "town", "city", "postcode")
+
 admin.site.register(Tag)
-admin.site.register(Location)
+admin.site.register(Location, LocationAdmin)
 admin.site.register(FoodCategory)
 
 

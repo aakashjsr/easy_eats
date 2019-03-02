@@ -12,7 +12,7 @@ JET_SIDE_MENU_ITEMS = [  # A list of application or custom item dicts
             {'name': 'accounts.user', 'label': 'User'},
             {'name': 'accounts.restaurantowner', 'label': 'Restaurant Owner'},
             {'name': 'accounts.restaurantstaff', 'label': 'Restaurant Staff'},
-            {'name': 'accounts.member', 'label': 'Member'},
+            {'name': 'accounts.diner', 'label': 'Diner'},
         ],
     },
     {

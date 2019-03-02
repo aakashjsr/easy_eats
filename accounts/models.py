@@ -10,7 +10,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     Base User model
     """
 
-    first_name = models.CharField(max_length=255, null=True, blank=True)
+    first_name = models.CharField(max_length=255)
     last_name = models.CharField(max_length=255, null=True, blank=True)
     email = models.EmailField(unique=True, null=True)
     mobile = models.CharField(max_length=25, null=True, blank=True)
@@ -31,7 +31,8 @@ class User(AbstractBaseUser, PermissionsMixin):
         return self.first_name
 
     def __str__(self):
-        return "{} {}".format(self.get_full_name(), self.email)
+
+        return "{} - {}".format(self.first_name, self.email)
 
 
 class RestaurantOwner(TimeStampedModel):
@@ -56,7 +57,7 @@ class RestaurantStaff(TimeStampedModel):
         return "{} ({})".format(self.user.get_full_name(), self.user.email)
 
 
-class Member(TimeStampedModel):
+class Diner(TimeStampedModel):
     """
     Member
     """

@@ -10,8 +10,8 @@ class OrderItemInline(admin.TabularInline):
 class OrderAdmin(admin.ModelAdmin):
     model = Order
     inlines = [OrderItemInline]
-    list_display = ("member", "restaurant", "status", "scheduled_datetime")
-    list_filter = ("scheduled_datetime", "restaurant", "member", "status")
+    list_display = ("diner", "restaurant", "status", "scheduled_datetime")
+    list_filter = ("scheduled_datetime", "restaurant", "diner", "status")
     readonly_fields = ("cancelled_by", )
 
 

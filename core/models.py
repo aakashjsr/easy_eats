@@ -18,12 +18,13 @@ class Location(TimeStampedModel):
     Model to store locations
     """
 
-    name = models.CharField(max_length=50, db_index=True)
+    area = models.CharField(max_length=50, db_index=True)
+    town = models.CharField(max_length=50, db_index=True)
     city = models.CharField(max_length=50, db_index=True)
-    postcode = models.CharField(max_length=10, null=True, blank=True)
+    postcode = models.CharField(max_length=10, null=True, blank=True, db_index=True)
 
     def __str__(self):
-        return "{} - {}".format(self.name, self.city)
+        return "{} - {}".format(self.area, self.city)
 
 
 class FoodCategory(TimeStampedModel):
