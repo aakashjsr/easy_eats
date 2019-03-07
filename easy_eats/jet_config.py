@@ -3,7 +3,7 @@ JET_SIDE_MENU_COMPACT = True
 JET_SIDE_MENU_ITEMS = [  # A list of application or custom item dicts
     {
         'label': 'Analytics Dashboards',
-        'items': [{'label': 'Overview', 'url': '', 'url_blank': True}],
+        'items': [{'label': 'Overview', 'url': '/analytics/', 'url_blank': False}],
     },
     {
         'label': 'User Management',
