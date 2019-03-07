@@ -1,0 +1,16 @@
+{% extends "admin/change_form.html" %}
+{% load i18n %}
+
+
+
+
+{% block submit_buttons_bottom %}
+    <div class="submit-row" align="right">
+
+       <input id="downloadBtn" type="button" value="Download Current Restaurant Statement" name="_anotherbutton" onclick="window.location.replace('/restaurant-statement/{{original.id}}/')">
+
+    </div>
+
+    {{ block.super }}
+{% endblock %}
+

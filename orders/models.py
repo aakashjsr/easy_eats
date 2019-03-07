@@ -54,7 +54,9 @@ class Order(TimeStampedModel):
     cancellation_charge = models.DecimalField(
         default=0, max_digits=10, decimal_places=2
     )
+    sub_total = models.DecimalField(default=0, max_digits=10, decimal_places=2)
     total = models.DecimalField(default=0, max_digits=10, decimal_places=2)
+    discount = models.DecimalField(default=0, max_digits=10, decimal_places=2)
     points_earned = models.PositiveIntegerField(default=0)
     user_rating = models.PositiveIntegerField(
         null=True, blank=True, validators=[MaxValueValidator(5), MinValueValidator(1)]
