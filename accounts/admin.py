@@ -87,7 +87,8 @@ class RestaurantStaffAdmin(admin.ModelAdmin):
 class DinerAdmin(admin.ModelAdmin):
 
     model = Diner
-    list_display = ("get_first_name", "get_email", "get_mobile", "id")
+    list_filter = ("created", )
+    list_display = ("created", "get_first_name", "get_email", "get_mobile", "id")
 
     def get_email(self, instance):
         return instance.user.email

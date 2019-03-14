@@ -33,11 +33,30 @@ class RestaurantAdmin(admin.ModelAdmin):
     model = Restaurant
     inlines = [FoodItemInline]
     list_display = (
+        "id",
         "name",
+        "get_total_orders",
+        "created",
         "dineout_online",
         "takeaway_online",
         "search_position",
+        "get_contact_email",
+        "get_contact_mobile",
     )
+
+    def get_contact_email(self, instance):
+        return instance.owner.user.email
+
+    def get_contact_mobile(self, instance):
+        return instance.owner.user.mobile
+
+    def get_total_orders(self, instance):
+        return instance.orders.count()
+
+    get_contact_email.short_description = "Contact Email"
+    get_contact_mobile.short_description = "Contact Phone"
+    get_total_orders.short_description = "Total Orders"
+    get_total_orders.admin_order_field = "name"
 
     search_fields = ("name",)
     readonly_fields = ("preview_display_image", )

@@ -3,6 +3,7 @@ from django.db import models
 
 from accounts.models import Diner, User
 from model_utils.models import TimeStampedModel
+from core.utils import generate_alphanumeric_id
 from restaurants.models import Restaurant, FoodItem, FoodItemAddon
 
 
@@ -27,6 +28,7 @@ class Order(TimeStampedModel):
         (4, LATE_BY_10),
     ]
 
+    order_id = models.CharField(null=True, blank=True, max_length=6, unique=True, db_index=True)
     diner = models.ForeignKey(Diner, related_name="diners", on_delete=models.CASCADE)
     cancelled_by = models.ForeignKey(
         User, related_name="orders_cancelled", on_delete=models.CASCADE, null=True, blank=True
@@ -51,6 +53,7 @@ class Order(TimeStampedModel):
     seats = models.PositiveIntegerField(default=0)
     food_items = models.ManyToManyField(FoodItem, through="OrderItem", related_name="orders")
     scheduled_datetime = models.DateTimeField()
+    completed_datetime = models.DateTimeField(null=True, blank=True)
     cancellation_charge = models.DecimalField(
         default=0, max_digits=10, decimal_places=2
     )
@@ -69,9 +72,18 @@ class Order(TimeStampedModel):
     )
     user_review = models.TextField(null=True, blank=True, max_length=280)
     restaurant_review = models.TextField(blank=True, max_length=280)
+    diner_delay = models.PositiveIntegerField(
+        null=True, blank=True, validators=[MinValueValidator(1)]
+    )
+    is_repeat_order = models.BooleanField(default=False)
 
     def __str__(self):
         return "{}-{}-{}".format(self.diner, self.restaurant, self.order_type)
+
+    def save(self, *args, **kwargs):
+        if not self.pk:
+            self.order_id = generate_alphanumeric_id()
+        super().save(*args, **kwargs)
 
 
 class OrderItem(TimeStampedModel):
