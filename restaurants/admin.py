@@ -33,8 +33,8 @@ class RestaurantAdmin(admin.ModelAdmin):
     model = Restaurant
     inlines = [FoodItemInline]
     list_display = (
-        "id",
         "name",
+        "id",
         "get_total_orders",
         "created",
         "dineout_online",
